@@ -1,4 +1,4 @@
-package com.utaemin.moyeing.response;
+package com.dolloer.million.exception.response;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
