@@ -1,13 +1,16 @@
-package com.sparta.doguin.security;
+package com.dolloer.million.security;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.Collections;
 
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
     private final AuthUser authUser;
 
     public JwtAuthenticationToken(AuthUser authUser) {
-        super(authUser.getAuthorities());
+        super(Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
         this.authUser = authUser;
         setAuthenticated(true);
     }

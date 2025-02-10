@@ -1,4 +1,9 @@
-package com.dolloer.million.domain.member.dto.response;
+package com.dolloer.million.domain.member.dto.request;
 
-public class SeedMoneyResponseDto {
+import lombok.Getter;
+
+@Getter
+public class SeedMoneyRequestDto {
+
+    private double seedMoney;
 }

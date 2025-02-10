@@ -1,6 +1,6 @@
-package com.dolloer.million.exception;
+package com.dolloer.million.response.exception;
 
-import com.dolloer.million.exception.response.ApiResponseAuthEnum;
+import com.dolloer.million.response.response.ApiResponseAuthEnum;
 import lombok.Getter;
 
 @Getter

@@ -1,4 +1,4 @@
-package com.dolloer.million.exception.response;
+package com.dolloer.million.response.response;
 
 public interface ApiResponseEnum {
     int getCode();

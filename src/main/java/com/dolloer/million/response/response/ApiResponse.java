@@ -1,4 +1,4 @@
-package com.dolloer.million.exception.response;
+package com.dolloer.million.response.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -23,6 +23,9 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> success(T data, String message) {
         return new ApiResponse<>(Status.SUCCESS, data, message);
+    }
+    public static <T> ApiResponse<T> success(String message) {
+        return new ApiResponse<>(Status.SUCCESS,null, message);
     }
 
     public static ApiResponse<?> successWithNoContent() {

@@ -1,7 +1,7 @@
-package com.dolloer.million.exception;
+package com.dolloer.million.response.exception;
 
 
-import com.dolloer.million.exception.response.ApiResponse;
+import com.dolloer.million.response.response.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
