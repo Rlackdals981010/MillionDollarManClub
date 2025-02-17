@@ -1,9 +1,8 @@
-package com.dolloer.million.domain.member.service;
+package com.dolloer.million.domain.seed.service;
 
-import com.dolloer.million.domain.member.entity.Member;
-import com.dolloer.million.domain.member.repository.MemberRepository;
+import com.dolloer.million.domain.seed.entity.Member;
+import com.dolloer.million.domain.seed.repository.SeedRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +25,13 @@ public class OptimisticTest {
     private MemberService memberService;
 
     @Autowired
-    private MemberRepository memberRepository;
+    private SeedRepository seedRepository;
 
     @Test
     public void 최초_시드설정_성공() {
         // when
         memberService.setSeedMoney(1L, 1000.0); // 서비스 메서드 호출
-        Member member = memberRepository.findById(1L)
+        Member member = seedRepository.findById(1L)
                 .orElseThrow(() -> new IllegalArgumentException("등록하고오셈"));
         // then
         assertEquals(1000.0, member.getSeedMoney()); // 시드 금액이 설정되었는지 확인

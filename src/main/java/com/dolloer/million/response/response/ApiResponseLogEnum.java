@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public enum ApiResponseMemberEnum implements ApiResponseEnum {
+public enum ApiResponseSeedEnum implements ApiResponseEnum {
     // 200
     SEED_SET_SUCCESS(HttpStatus.OK,"시드 등록에 성공하였습니다."),
 
@@ -17,7 +17,7 @@ public enum ApiResponseMemberEnum implements ApiResponseEnum {
     private final int code;
     private final String message;
 
-    ApiResponseMemberEnum(HttpStatus httpStatus, String message) {
+    ApiResponseSeedEnum(HttpStatus httpStatus, String message) {
         this.httpStatus = httpStatus;
         this.message = message;
         code = httpStatus.value();
