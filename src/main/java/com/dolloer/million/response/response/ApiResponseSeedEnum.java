@@ -7,11 +7,6 @@ import org.springframework.http.HttpStatus;
 public enum ApiResponseMemberEnum implements ApiResponseEnum {
     // 200
     SEED_SET_SUCCESS(HttpStatus.OK,"시드 등록에 성공하였습니다."),
-    SAVEPER_SET_SUCCESS(HttpStatus.OK,"저축 비율 등록에 성공하였습니다."),
-    REVENUE_SET_SUCCESS(HttpStatus.OK,"수익 등록에 성공하였습니다."),
-    TOTAL_CAL_SUCCESS(HttpStatus.OK,"수익률 등록에 성공하였습니다."),
-    QUEST_COMP_SUCCESS(HttpStatus.OK,"처리한 일퀘 등록에 성공하였습니다."),
-    QUEST_UP_SUCCESS(HttpStatus.OK,"처리할 일퀘 등록에 성공하였습니다."),
 
 
     // 400

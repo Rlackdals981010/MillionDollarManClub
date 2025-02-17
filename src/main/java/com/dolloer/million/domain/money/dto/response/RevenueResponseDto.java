@@ -1,4 +1,4 @@
-package com.dolloer.million.domain.member.dto.response;
+package com.dolloer.million.domain.seed.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

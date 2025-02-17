@@ -1,4 +1,4 @@
-package com.dolloer.million.domain.member.dto.request;
+package com.dolloer.million.domain.seed.dto.request;
 
 import lombok.Getter;
 
