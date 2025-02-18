@@ -1,4 +1,4 @@
-package com.dolloer.million.domain.money.entity;
+package com.dolloer.million.domain.member.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,15 +20,18 @@ public class Member {
 
     // 시드 머니
     private Double seedMoney;
-    // 내 재산
+    // 전체 자산
     private Double total;
-
+    // 전체 저축액
+    private Double saveMoney;
+    // 일퀘 성공
     private Integer successQuest;
 
     public Member(String name){
         this.name=name;
         this.seedMoney = 0.0;
         this.total = 0.0;
+        this.saveMoney = 0.0;
         this.successQuest=0;
     }
 
@@ -37,6 +40,7 @@ public class Member {
         this.seedMoney = seedMoney;
         this.total = this.seedMoney;
     }
+
     // 시드 추가
     public void changeSeed(Double seedMoney){
         this.seedMoney += seedMoney;
@@ -46,6 +50,11 @@ public class Member {
     // 일퀘 성공시 증가
     public void updateSuccessQuest(){
         this.successQuest++;
+    }
+
+    // 저축액 업데이트
+    public void updateSaveMoney(Double saveMoney){
+        this.saveMoney+=saveMoney;
     }
 
     // 자산 업데이트

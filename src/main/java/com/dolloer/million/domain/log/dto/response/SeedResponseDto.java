@@ -1,6 +1,6 @@
-package com.dolloer.million.domain.seed.dto.response;
+package com.dolloer.million.domain.log.dto.response;
 
-import com.dolloer.million.domain.seed.entity.SeedHistory;
+import com.dolloer.million.domain.log.entity.SeedHistory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

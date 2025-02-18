@@ -1,4 +1,4 @@
-package com.dolloer.million.domain.seed.dto.response;
+package com.dolloer.million.domain.money.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,7 +6,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class UpcomingQuestResponseDto {
-    private final double finalMoney;
-    private final double saveMoney;
-    private final Integer count;
+    private final int dailyQuest;
 }

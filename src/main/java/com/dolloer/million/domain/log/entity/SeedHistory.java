@@ -1,4 +1,4 @@
-package com.dolloer.million.domain.seed.entity;
+package com.dolloer.million.domain.log.entity;
 
 import com.dolloer.million.domain.member.entity.Member;
 import jakarta.persistence.*;

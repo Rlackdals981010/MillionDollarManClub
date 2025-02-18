@@ -58,6 +58,12 @@ dependencies {
     // Spring Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
+    // 비동기 HTTP 요청용
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+
+    implementation 'io.projectreactor.netty:reactor-netty:1.0.24'
+    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
 }
 
 tasks.named('test') {

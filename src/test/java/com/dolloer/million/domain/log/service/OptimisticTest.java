@@ -1,7 +1,7 @@
-package com.dolloer.million.domain.seed.service;
+package com.dolloer.million.domain.log.service;
 
-import com.dolloer.million.domain.seed.entity.Member;
-import com.dolloer.million.domain.seed.repository.SeedRepository;
+import com.dolloer.million.domain.log.entity.Member;
+import com.dolloer.million.domain.log.repository.SeedRepository;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

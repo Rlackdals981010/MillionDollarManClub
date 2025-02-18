@@ -10,6 +10,7 @@ import com.dolloer.million.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -21,6 +22,7 @@ public class AuthService {
     private final JwtUtil jwtUtil;
 
     // 회원 등록
+    @Transactional
     public SignUpResponseDto signUp(String name){
         memberRepository.findByName(name)
                 .ifPresent(member -> {
@@ -38,7 +40,6 @@ public class AuthService {
                 .orElseThrow(() -> new CustomException(ApiResponseAuthEnum.MEMBER_NO_EXIST));
 
         return new SignInResponseDto(jwtUtil.createToken(member.getId(), member.getName()));
-
     }
 
 
