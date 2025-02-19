@@ -25,13 +25,15 @@ public class RevenueHistory {
     private Double addedSaveMoney;      // 당일 저축 액
     private Double addedRevenuePercent; // 당일 수익률
     private Double todayTotal;          // 당일 총액
+    private Boolean quest;              // 당일 일일퀘스트
 
-    public RevenueHistory(Member member, Double addedRevenueMoney, Double addedSaveMoney, Double addedRevenuePercent, Double todayTotal){
+    public RevenueHistory(Member member, Double addedRevenueMoney, Double addedSaveMoney, Double addedRevenuePercent, Double todayTotal,Boolean quest){
         this.member = member;
         this.date = LocalDate.now();
         this.addedRevenueMoney = addedRevenueMoney;
         this.addedSaveMoney = addedSaveMoney;
         this.addedRevenuePercent = addedRevenuePercent;
         this.todayTotal =todayTotal;
+        this.quest = quest;
     }
 }

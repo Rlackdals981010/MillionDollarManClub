@@ -1,9 +1,7 @@
 package com.dolloer.million.domain.money.service;
 
-import com.dolloer.million.domain.log.repository.SeedRepository;
 import com.dolloer.million.domain.member.entity.Member;
 import com.dolloer.million.domain.member.repository.MemberRepository;
-import com.dolloer.million.domain.money.dto.response.CalculateResponseDto;
 import com.dolloer.million.domain.money.dto.response.UpcomingQuestResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +11,8 @@ import org.springframework.stereotype.Service;
 public class MoneyService {
 
     private final MemberRepository memberRepository;
-    private final Integer target = 1000000;
-    private final Integer dailyGoal =3;
+    private final Integer target = 1000000; // 100만불
+    private final Double dailyGoal =1.03;  // 3퍼 수익
 
 
     // 처리할 일퀘 시뮬레이터
@@ -23,10 +21,9 @@ public class MoneyService {
                 .orElseThrow(() -> new IllegalArgumentException("등록하고오셈"));
 
         double currentMoney = member.getTotal();
-        double dailyGrowth = 1.03; // 하루 3% 성장 (dailyGoal = 3)
 
-        // 실질적인 성장률 계산 (3% 성장 후 per% 만큼 저축)
-        double growthRate = 1 + ((dailyGrowth - 1) * (1 - per / 100));
+        // 3% 성장 후 per% 만큼 저축
+        double growthRate = 1 + ((dailyGoal - 1) * (1 - per / 100));
 
         // 성장률이 1 이하라면 목표에 도달할 수 없으므로 예외 처리
         if (growthRate <= 1) {

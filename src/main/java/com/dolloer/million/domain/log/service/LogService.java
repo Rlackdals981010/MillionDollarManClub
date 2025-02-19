@@ -66,11 +66,13 @@ public class LogService {
                 .orElseThrow(() -> new IllegalArgumentException("등록하고오셈"));
 
         try{
+            boolean quest = false;
             double dailyPer = (double) Math.round((dailyRevenue / member.getTotal()) * 100 * 100) / 100;
             if(dailyPer>=dailyGoal){
                 member.updateSuccessQuest();
+                quest=true;
             }
-            RevenueHistory revenueHistory = new RevenueHistory(member, dailyRevenue, dailySaveMoney, dailyPer,member.getTotal()+dailyRevenue);
+            RevenueHistory revenueHistory = new RevenueHistory(member, dailyRevenue, dailySaveMoney, dailyPer,member.getTotal()+dailyRevenue,quest);
             member.updateTotal(member.getTotal() + dailyRevenue);
             member.updateSaveMoney(dailySaveMoney);
             revenueRepository.save(revenueHistory);

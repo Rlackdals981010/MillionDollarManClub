@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable) // BasicAuthenticationFilter 비활성화
                 .logout(AbstractHttpConfigurer::disable) // LogoutFilter 비활성화
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/signin", "/signup").permitAll()
+                        .requestMatchers("/signin", "/signup","/stock/price").permitAll()
                         .anyRequest().authenticated()
                 )
                 .build();
