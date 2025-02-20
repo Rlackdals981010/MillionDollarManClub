@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/stock")
 @RequiredArgsConstructor
@@ -29,5 +32,15 @@ public class StockController {
         return stockService.getStockPrice(symbol)
                 .map(stockResponseDto -> ResponseEntity.ok(ApiResponse.success(stockResponseDto,
                         ApiResponseStockEnum.STOCK_GET_SUCCESS.getMessage())));
+    }
+
+    @GetMapping("/candle")
+    public Mono<ResponseEntity<ApiResponse<Map<String, List<Double>>>>> getCandleChartData(
+            @RequestParam String symbol,
+            @RequestParam(defaultValue = "day") String timeSeries,
+            @RequestParam(required = false) String interval) {
+        return stockService.getCandleChartData(symbol, timeSeries, interval)
+                .map(chartData -> ResponseEntity.ok(ApiResponse.success(chartData,
+                        ApiResponseStockEnum.CANDLE_DATA_SUCCESS.getMessage())));
     }
 }

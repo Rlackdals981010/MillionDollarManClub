@@ -6,8 +6,8 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ApiResponseStockEnum implements ApiResponseEnum {
     // 200
-    STOCK_GET_SUCCESS(HttpStatus.OK,"주가 조회에 성공하였습니다.");
-
+    STOCK_GET_SUCCESS(HttpStatus.OK,"주가 조회에 성공하였습니다."),
+    CANDLE_DATA_SUCCESS(HttpStatus.OK,"주가 전체 조회에 성공하였습니다.");
 
 
     private final HttpStatus httpStatus;

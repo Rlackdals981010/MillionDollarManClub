@@ -25,9 +25,11 @@ public class RevenueResponseDto {
     // 해당 시점 총액
     private Double todayTotal;
 
+    private Boolean quest;
+
 
     public static RevenueResponseDto from(RevenueHistory revenueHistory) {
-        return new RevenueResponseDto(revenueHistory.getDate(),revenueHistory.getAddedRevenueMoney(), revenueHistory.getAddedSaveMoney(), revenueHistory.getAddedRevenuePercent(),revenueHistory.getTodayTotal());
+        return new RevenueResponseDto(revenueHistory.getDate(),revenueHistory.getAddedRevenueMoney(), revenueHistory.getAddedSaveMoney(), revenueHistory.getAddedRevenuePercent(),revenueHistory.getTodayTotal(),revenueHistory.getQuest());
     }
 
 }
