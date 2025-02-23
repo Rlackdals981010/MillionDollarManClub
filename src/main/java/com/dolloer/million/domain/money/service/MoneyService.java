@@ -15,7 +15,7 @@ public class MoneyService {
     private final Double dailyGoal =1.03;  // 3퍼 수익
 
 
-    // 처리할 일퀘 시뮬레이터
+    // 저축 비율 입력시 처리할 일퀘 시뮬레이터
     public UpcomingQuestResponseDto upcomingQuest(Long memberId, Double per) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("등록하고오셈"));
