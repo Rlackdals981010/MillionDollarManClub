@@ -10,6 +10,7 @@ public enum ApiResponseLogEnum implements ApiResponseEnum {
     REVENUE_SET_SUCCESS(HttpStatus.OK,"수익 등록에 성공하였습니다."),
     SEED_GET_SUCCESS(HttpStatus.OK,"시드 로그 조회에 성공하였습니다."),
     REVENUE_GET_SUCCESS(HttpStatus.OK,"수익 로그 조회에 성공하였습니다."),
+    SAVE_MONEY_SET_SUCCESS(HttpStatus.OK,"저축 등록에 성공하였습니다."),
     // 400
     MEMBER_COUNT_WRONG(HttpStatus.BAD_REQUEST,"10명 이하만 가능합니다.");
 

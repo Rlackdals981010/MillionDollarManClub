@@ -1,5 +1,6 @@
 package com.dolloer.million.domain.stock.controller;
 
+import com.dolloer.million.domain.stock.dto.response.StockLogResponseDto;
 import com.dolloer.million.domain.stock.dto.response.StockResponseDto;
 import com.dolloer.million.domain.stock.service.StockService;
 import com.dolloer.million.response.response.ApiResponse;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/stock")
@@ -34,13 +34,14 @@ public class StockController {
                         ApiResponseStockEnum.STOCK_GET_SUCCESS.getMessage())));
     }
 
-    @GetMapping("/candle")
-    public Mono<ResponseEntity<ApiResponse<Map<String, List<Double>>>>> getCandleChartData(
-            @RequestParam String symbol,
-            @RequestParam(defaultValue = "day") String timeSeries,
-            @RequestParam(required = false) String interval) {
-        return stockService.getCandleChartData(symbol, timeSeries, interval)
-                .map(chartData -> ResponseEntity.ok(ApiResponse.success(chartData,
-                        ApiResponseStockEnum.CANDLE_DATA_SUCCESS.getMessage())));
+    @GetMapping("/history")
+    public ResponseEntity<ApiResponse<List<StockLogResponseDto>>> getStockHistory(
+            @AuthenticationPrincipal AuthUser authUser,
+            @RequestParam String symbol) {
+        List<StockLogResponseDto> history = stockService.getStockHistory(symbol);
+        return ResponseEntity.ok(ApiResponse.success(history, ApiResponseStockEnum.STOCK_HISTORY_SUCCESS.getMessage()));
     }
+
+
+
 }

@@ -46,9 +46,6 @@ dependencies {
     // H2 Database (임시 저장용)
     runtimeOnly("com.h2database:h2")
 
-    // RestTemplate 또는 WebClient (Yahoo Finance API 요청)
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-
     // Jackson (JSON 파싱)
     implementation("com.fasterxml.jackson.core:jackson-databind")
 
@@ -61,9 +58,11 @@ dependencies {
     // 비동기 HTTP 요청용
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
+    implementation 'org.jsoup:jsoup:1.17.2'
 
     implementation 'io.projectreactor.netty:reactor-netty:1.0.24'
     implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
+
 }
 
 tasks.named('test') {

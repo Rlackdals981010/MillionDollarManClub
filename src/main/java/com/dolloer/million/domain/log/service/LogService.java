@@ -59,42 +59,29 @@ public class LogService {
 
     // 수익 설정
     @Transactional
-    public void setRevenueMoney(Long memberId, Double dailyRevenue, Double dailySaveMoney){
-        if(dailySaveMoney == null){
-            dailySaveMoney=0.0;
-        }
-
+    public void setRevenue(Long memberId, Double dailyRevenue) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("등록하고오셈"));
 
         LocalDate currentDate = LocalDate.now();
 
-        try{
-            // 동일한 날짜의 기존 데이터 조회
+        try {
             RevenueHistory existingHistory = revenueRepository.findByMemberIdAndDate(memberId, currentDate)
                     .orElse(null);
 
             if (existingHistory != null) {
-                // 기존 데이터가 있으면 합산
+                // 기존 데이터 업데이트
                 double newRevenue = existingHistory.getAddedRevenueMoney() + dailyRevenue;
-                double newSaveMoney = existingHistory.getAddedSaveMoney() + dailySaveMoney;
-                double newTotal = member.getTotal() + newRevenue; // 기존 총액에 새로운 수익 더하기
-
-                // 새로운 수익률 계산 (총액 대비 새로운 수익 비율)
+                double newSaveMoney = existingHistory.getAddedSaveMoney();
+                double newTotal = member.getTotal() + dailyRevenue;
                 double newPercent = (double) Math.round((newRevenue / newTotal) * 100 * 100) / 100;
-
                 boolean quest = newPercent >= dailyGoal;
 
-                // 기존 데이터 업데이트
-                existingHistory.update(newRevenue,newSaveMoney,newPercent,newTotal,quest);
-
-                // 멤버 총액 및 저축 업데이트
+                existingHistory.update(newRevenue, newSaveMoney, newPercent, newTotal, quest);
                 member.updateTotal(newTotal);
-                member.updateSaveMoney(member.getSaveMoney() + dailySaveMoney);
-
                 revenueRepository.save(existingHistory);
             } else {
-                // 기존 데이터가 없으면 새로 생성
+                // 새 데이터 생성
                 boolean quest = false;
                 double dailyPer = (double) Math.round((dailyRevenue / member.getTotal()) * 100 * 100) / 100;
                 if (dailyPer >= dailyGoal) {
@@ -103,18 +90,63 @@ public class LogService {
                 }
 
                 RevenueHistory revenueHistory = new RevenueHistory(
-                        member, dailyRevenue, dailySaveMoney, dailyPer, member.getTotal() + dailyRevenue, quest);
+                        member, dailyRevenue, 0.0, dailyPer,
+                        member.getTotal() + dailyRevenue, quest);
                 member.updateTotal(member.getTotal() + dailyRevenue);
+                revenueRepository.save(revenueHistory);
+            }
+
+            memberRepository.saveAndFlush(member);
+
+        } catch (ObjectOptimisticLockingFailureException e) {
+            throw new RuntimeException(
+                    String.format("Method: setRevenue, Version:%d, ID:%d, dailyRevenue:%.2f, 동시성 문제 발생. 원인: %s",
+                            member.getVersion(), memberId, dailyRevenue, e.getMessage())
+            );
+        }
+    }
+
+    @Transactional
+    public void setSaveMoney(Long memberId, Double dailySaveMoney) {
+        if (dailySaveMoney == null) {
+            dailySaveMoney = 0.0;
+        }
+
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("등록하고오셈"));
+
+        LocalDate currentDate = LocalDate.now();
+
+        try {
+            RevenueHistory existingHistory = revenueRepository.findByMemberIdAndDate(memberId, currentDate)
+                    .orElse(null);
+
+            if (existingHistory != null) {
+                // 기존 데이터 업데이트
+                double newRevenue = existingHistory.getAddedRevenueMoney();
+                double newSaveMoney = existingHistory.getAddedSaveMoney() + dailySaveMoney;
+                double newTotal = existingHistory.getTodayTotal();
+                double newPercent = (double) Math.round((newRevenue / newTotal) * 100 * 100) / 100;
+                boolean quest = existingHistory.getQuest();
+
+                existingHistory.update(newRevenue, newSaveMoney, newPercent, newTotal, quest);
+                member.updateSaveMoney(member.getSaveMoney() + dailySaveMoney);
+                revenueRepository.save(existingHistory);
+            } else {
+                // 새 데이터 생성
+                RevenueHistory revenueHistory = new RevenueHistory(
+                        member, 0.0, dailySaveMoney, 0.0,
+                        member.getTotal(), false);
                 member.updateSaveMoney(member.getSaveMoney() + dailySaveMoney);
                 revenueRepository.save(revenueHistory);
             }
 
             memberRepository.saveAndFlush(member);
 
-        }catch (ObjectOptimisticLockingFailureException e) {
+        } catch (ObjectOptimisticLockingFailureException e) {
             throw new RuntimeException(
-                    String.format("Method: setRevenue, Version:%d, ID:%d, dailyRevenue:%.2f, dailySaveMoney:%.2f  동시성 문제 발생. 원인: %s",
-                            member.getVersion(), memberId, dailyRevenue, dailySaveMoney, e.getMessage())
+                    String.format("Method: setSaveMoney, Version:%d, ID:%d, dailySaveMoney:%.2f, 동시성 문제 발생. 원인: %s",
+                            member.getVersion(), memberId, dailySaveMoney, e.getMessage())
             );
         }
     }

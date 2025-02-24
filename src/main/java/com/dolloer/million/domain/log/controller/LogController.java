@@ -1,6 +1,7 @@
 package com.dolloer.million.domain.log.controller;
 
 import com.dolloer.million.domain.log.dto.request.RevenueRequestDto;
+import com.dolloer.million.domain.log.dto.request.SaveMoneyRequestDto;
 import com.dolloer.million.domain.log.dto.request.SeedRequestDto;
 import com.dolloer.million.domain.log.dto.response.RevenueResponseDto;
 import com.dolloer.million.domain.log.dto.response.SeedResponseDto;
@@ -46,9 +47,19 @@ public class LogController {
 
     // 수익및 저축 설정
     @PostMapping("/revenue")
-    public ResponseEntity<ApiResponse<Void>> setRevenue(@AuthenticationPrincipal AuthUser authUser, @RequestBody RevenueRequestDto revenueRequestDto){
-        logService.setRevenueMoney(authUser.getUserId(), revenueRequestDto.getDailyRevenue(), revenueRequestDto.getDailySaveMoney());
-        return ResponseEntity.ok(ApiResponse.success( ApiResponseLogEnum.REVENUE_SET_SUCCESS.getMessage()));
+    public ResponseEntity<ApiResponse<Void>> setRevenue(
+            @AuthenticationPrincipal AuthUser authUser,
+            @RequestBody RevenueRequestDto revenueRequestDto) {
+        logService.setRevenue(authUser.getUserId(), revenueRequestDto.getDailyRevenue());
+        return ResponseEntity.ok(ApiResponse.success(ApiResponseLogEnum.REVENUE_SET_SUCCESS.getMessage()));
+    }
+
+    @PostMapping("/save-money")
+    public ResponseEntity<ApiResponse<Void>> setSaveMoney(
+            @AuthenticationPrincipal AuthUser authUser,
+            @RequestBody SaveMoneyRequestDto saveMoneyRequestDto) {
+        logService.setSaveMoney(authUser.getUserId(), saveMoneyRequestDto.getDailySaveMoney());
+        return ResponseEntity.ok(ApiResponse.success(ApiResponseLogEnum.SAVE_MONEY_SET_SUCCESS.getMessage()));
     }
 
     // 수익 로그 조회
