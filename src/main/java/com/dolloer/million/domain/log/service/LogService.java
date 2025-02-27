@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,17 +36,31 @@ public class LogService {
     public void setSeedMoney(Long memberId, Double seedMoney) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("등록하고오셈"));
-        try{
+        try {
+            LocalDate today = LocalDate.now();
+
+            // 오늘의 SeedHistory 기록 조회
+            Optional<SeedHistory> existingHistory = seedRepository.findByMemberAndDate(member, today);
+
             if (member.getSeedMoney() == 0) {
                 member.initSeed(seedMoney);
             } else {
                 member.changeSeed(seedMoney);
             }
-            SeedHistory seedHistory = new SeedHistory(member, seedMoney, member.getSeedMoney());
-            seedRepository.save(seedHistory);
+
+            if (existingHistory.isPresent()) {
+                // 기존 기록이 있으면 금액 합산
+                SeedHistory history = existingHistory.get();
+                history.addAmount(seedMoney);
+                seedRepository.save(history);
+            } else {
+                // 기록이 없으면 새로 저장
+                SeedHistory seedHistory = new SeedHistory(member, seedMoney, member.getSeedMoney());
+                seedRepository.save(seedHistory);
+            }
 
             memberRepository.saveAndFlush(member);
-        }catch (ObjectOptimisticLockingFailureException e){
+        } catch (ObjectOptimisticLockingFailureException e) {
             log.info("Method: setSeedMoney, Version:{}, ID:{}, seedMoney:{} 동시성 문제 발생", member.getVersion(), memberId, seedMoney);
         }
     }

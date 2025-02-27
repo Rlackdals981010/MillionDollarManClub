@@ -30,4 +30,9 @@ public class SeedHistory {
         this.totalSeedMoney = totalSeedMoney;
     }
 
+    public void addAmount(Double addedSeedMoney){
+        this.addedSeedMoney += addedSeedMoney;
+        this.totalSeedMoney += addedSeedMoney;
+    }
+
 }

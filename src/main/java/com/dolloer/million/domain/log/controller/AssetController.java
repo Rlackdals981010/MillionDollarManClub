@@ -23,7 +23,9 @@ public class AssetController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<UserAssetResponseDto>> getUserAssets(@AuthenticationPrincipal AuthUser authUser) {
+        log.info("수익 그래프용 호출");
         UserAssetResponseDto result = assetService.getUserAssets( authUser.getUserId());
+        log.info("수익 그래프용 응답");
         return ResponseEntity.ok(ApiResponse.success(result, ApiResponseAssetEnum.Asset_GET_SUCCESS.getMessage()));
     }
 
