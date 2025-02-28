@@ -1,3 +1,5 @@
+server:
+  port: 8080
 spring:
   config:
     import: optional:file:.env[.properties]
@@ -9,8 +11,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-
-
 jwt:
   secret:
     key: ${JWT_SECRET_KEY}
