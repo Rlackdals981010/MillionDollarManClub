@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class MoneyService {
 
     private final MemberRepository memberRepository;
-    private final Integer target = 1000000*1400; // 100만불
+    private final Integer target = 1000000; // 100만불
     private final Double dailyGoal =1.03;  // 3퍼 수익
 
 
