@@ -1,5 +1,5 @@
 # 빌드 단계
-FROM gradle:7.6.1-jdk17 AS build
+FROM gradle:8.12-jdk17 AS build
 WORKDIR /app
 COPY build.gradle settings.gradle ./
 COPY src ./src

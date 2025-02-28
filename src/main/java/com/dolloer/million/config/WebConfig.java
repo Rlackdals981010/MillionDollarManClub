@@ -11,7 +11,7 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
-      .allowedOrigins("http://localhost:3000")
+      .allowedOrigins("https://milliondollarmanclub.onrender.com")
       .allowedMethods("GET", "POST", "PUT", "DELETE")
       .allowedHeaders("*")
       .allowCredentials(true); // 쿠키나 인증 헤더 허용
