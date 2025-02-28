@@ -95,7 +95,7 @@ public class LogService {
             } else {
                 SeedHistory latestSeed = seedRepository.findTopByMemberIdAndDateBeforeOrderByDateDesc(memberId, targetDate)
                         .orElse(null);
-                baseTotal = (latestSeed != null) ? latestSeed.getTotalSeedMoney() : 0.0; // SeedHistory도 없으면 0
+                baseTotal = (latestSeed != null) ? latestSeed.getTotalSeedMoney() :member.getSeedMoney(); // SeedHistory도 없으면 그냥 최신 기준 시드 머니
             }
 
             // targetDate의 데이터 처리
