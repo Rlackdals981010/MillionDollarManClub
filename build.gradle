@@ -19,6 +19,10 @@ configurations {
     }
 }
 
+bootJar {
+    archiveFileName = 'app.jar'  // JAR 파일 이름을 app.jar로 고정
+}
+
 repositories {
     mavenCentral()
 }
