@@ -55,7 +55,7 @@ public class LogController {
             @AuthenticationPrincipal AuthUser authUser,
             @RequestBody RevenueRequestDto revenueRequestDto) {
         log.info("수익 등록 호출");
-        logService.setRevenue(authUser.getUserId(), revenueRequestDto.getDailyRevenue());
+        logService.setRevenue(authUser.getUserId(), revenueRequestDto.getDailyRevenue(),revenueRequestDto.getDate());
         log.info("수익 등록 응답");
         return ResponseEntity.ok(ApiResponse.success(ApiResponseLogEnum.REVENUE_SET_SUCCESS.getMessage()));
     }

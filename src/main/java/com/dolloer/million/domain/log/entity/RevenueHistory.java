@@ -36,6 +36,15 @@ public class RevenueHistory {
         this.todayTotal =todayTotal;
         this.quest = quest;
     }
+    public RevenueHistory(Member member,LocalDate date, Double addedRevenueMoney, Double addedSaveMoney, Double addedRevenuePercent, Double todayTotal,Boolean quest){
+        this.member = member;
+        this.date =date;
+        this.addedRevenueMoney = addedRevenueMoney;
+        this.addedSaveMoney = addedSaveMoney;
+        this.addedRevenuePercent = addedRevenuePercent;
+        this.todayTotal =todayTotal;
+        this.quest = quest;
+    }
 
     public void update(Double addedRevenueMoney, Double addedSaveMoney, Double addedRevenuePercent, Double todayTotal,Boolean quest){
         this.addedRevenueMoney = addedRevenueMoney;

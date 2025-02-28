@@ -74,14 +74,16 @@ public class LogService {
 
     // 수익 설정
     @Transactional
-    public void setRevenue(Long memberId, Double dailyRevenue) {
+    public void setRevenue(Long memberId, Double dailyRevenue,String date) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("등록하고오셈"));
 
-        LocalDate currentDate = LocalDate.now();
+        LocalDate targetDate =date != null
+                ? LocalDate.parse(date) // 클라이언트에서 받은 날짜 사용
+                : LocalDate.now(); // 날짜가 없으면 기본값으로 오늘 사용
 
         try {
-            RevenueHistory existingHistory = revenueRepository.findByMemberIdAndDate(memberId, currentDate)
+            RevenueHistory existingHistory = revenueRepository.findByMemberIdAndDate(memberId, targetDate)
                     .orElse(null);
 
             if (existingHistory != null) {
@@ -105,8 +107,8 @@ public class LogService {
                 }
 
                 RevenueHistory revenueHistory = new RevenueHistory(
-                        member, dailyRevenue, 0.0, dailyPer,
-                        member.getTotal() + dailyRevenue, quest);
+                        member,targetDate, dailyRevenue, 0.0, dailyPer,
+                        member.getTotal() + dailyRevenue, quest); // targetDate 추가Ï
                 member.updateTotal(member.getTotal() + dailyRevenue);
                 revenueRepository.save(revenueHistory);
             }
@@ -115,8 +117,8 @@ public class LogService {
 
         } catch (ObjectOptimisticLockingFailureException e) {
             throw new RuntimeException(
-                    String.format("Method: setRevenue, Version:%d, ID:%d, dailyRevenue:%.2f, 동시성 문제 발생. 원인: %s",
-                            member.getVersion(), memberId, dailyRevenue, e.getMessage())
+                    String.format("Method: setRevenue, Version:%d, ID:%d, dailyRevenue:%.2f, date:%s, 동시성 문제 발생. 원인: %s",
+                            member.getVersion(), memberId, dailyRevenue, targetDate.toString(), e.getMessage())
             );
         }
     }
