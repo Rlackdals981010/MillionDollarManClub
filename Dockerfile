@@ -1,13 +1,13 @@
-FROM eclipse-temurin:17-jdk-alpine
-
-# 작업 디렉토리 설정
+# 빌드 단계
+FROM gradle:7.6.1-jdk17 AS build
 WORKDIR /app
+COPY build.gradle settings.gradle ./
+COPY src ./src
+RUN gradle build -x test
 
-# Gradle 빌드 결과물 복사 (미리 빌드된 JAR 파일)
-COPY build/libs/*.jar app.jar
-
-# 컨테이너에서 실행될 포트
+# 실행 단계
+FROM eclipse-temurin:17-jdk-alpine
+WORKDIR /app
+COPY --from=build /app/build/libs/*.jar app.jar
 EXPOSE 8080
-
-# 애플리케이션 실행 명령어
 ENTRYPOINT ["java", "-jar", "/app.jar"]
