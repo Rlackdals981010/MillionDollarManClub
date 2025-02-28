@@ -15,4 +15,5 @@ public interface SeedRepository extends JpaRepository<SeedHistory, Long> {
 
 
     Optional<SeedHistory> findByMemberAndDate(Member member, LocalDate today);
+    Optional<SeedHistory> findTopByMemberIdAndDateBeforeOrderByDateDesc(Long memberId, LocalDate date);
 }

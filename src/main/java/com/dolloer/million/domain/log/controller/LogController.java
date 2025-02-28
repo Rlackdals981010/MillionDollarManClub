@@ -65,7 +65,7 @@ public class LogController {
             @AuthenticationPrincipal AuthUser authUser,
             @RequestBody SaveMoneyRequestDto saveMoneyRequestDto) {
         log.info("저축 등록 호출");
-        logService.setSaveMoney(authUser.getUserId(), saveMoneyRequestDto.getDailySaveMoney());
+        logService.setSaveMoney(authUser.getUserId(), saveMoneyRequestDto.getDailySaveMoney(),saveMoneyRequestDto.getDate());
         log.info("저축 등록 응답");
         return ResponseEntity.ok(ApiResponse.success(ApiResponseLogEnum.SAVE_MONEY_SET_SUCCESS.getMessage()));
     }

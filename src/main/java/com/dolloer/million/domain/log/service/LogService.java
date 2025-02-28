@@ -84,10 +84,19 @@ public class LogService {
                 : LocalDate.now(); // 날짜가 없으면 기본값으로 오늘 사용
 
         try {
-            // targetDate 이전의 가장 최근 RevenueHistory 찾기 (없으면 null)
+            // targetDate 이전의 가장 최근 RevenueHistory 찾기
             RevenueHistory latestHistory = revenueRepository.findTopByMemberIdAndDateBeforeOrderByDateDesc(memberId, targetDate)
                     .orElse(null);
-            double baseTotal = (latestHistory != null) ? latestHistory.getTodayTotal() : 0.0;
+
+            // 기준 total 계산: RevenueHistory가 없으면 SeedHistory에서 가져옴
+            double baseTotal;
+            if (latestHistory != null) {
+                baseTotal = latestHistory.getTodayTotal();
+            } else {
+                SeedHistory latestSeed = seedRepository.findTopByMemberIdAndDateBeforeOrderByDateDesc(memberId, targetDate)
+                        .orElse(null);
+                baseTotal = (latestSeed != null) ? latestSeed.getTotalSeedMoney() : 0.0; // SeedHistory도 없으면 0
+            }
 
             // targetDate의 데이터 처리
             RevenueHistory existingHistory = revenueRepository.findByMemberIdAndDate(memberId, targetDate)
@@ -147,10 +156,19 @@ public class LogService {
                 : LocalDate.now(); // 날짜가 없으면 기본값으로 오늘 사용
 
         try {
-            // targetDate 이전의 가장 최근 RevenueHistory 찾기 (없으면 null)
+            // targetDate 이전의 가장 최근 RevenueHistory 찾기
             RevenueHistory latestHistory = revenueRepository.findTopByMemberIdAndDateBeforeOrderByDateDesc(memberId, targetDate)
                     .orElse(null);
-            double baseTotal = (latestHistory != null) ? latestHistory.getTodayTotal() : 0.0;
+
+            // 기준 total 계산: RevenueHistory가 없으면 SeedHistory에서 가져옴
+            double baseTotal;
+            if (latestHistory != null) {
+                baseTotal = latestHistory.getTodayTotal();
+            } else {
+                SeedHistory latestSeed = seedRepository.findTopByMemberIdAndDateBeforeOrderByDateDesc(memberId, targetDate)
+                        .orElse(null);
+                baseTotal = (latestSeed != null) ? latestSeed.getTotalSeedMoney() : 0.0; // SeedHistory도 없으면 0
+            }
 
             // targetDate의 데이터 처리
             RevenueHistory existingHistory = revenueRepository.findByMemberIdAndDate(memberId, targetDate)
