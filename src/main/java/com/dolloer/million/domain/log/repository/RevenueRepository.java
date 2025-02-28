@@ -19,4 +19,7 @@ public interface RevenueRepository extends JpaRepository<RevenueHistory, Long> {
     Optional<RevenueHistory> findByMemberIdAndDate(Long memberId, LocalDate date);
 
 
+    Optional<RevenueHistory> findTopByMemberIdAndDateBeforeOrderByDateDesc(Long memberId, LocalDate date);
+
+    List<RevenueHistory> findByMemberIdAndDateAfterOrderByDateAsc(Long memberId, LocalDate date);
 }
