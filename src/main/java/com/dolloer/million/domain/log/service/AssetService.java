@@ -28,27 +28,21 @@ public class AssetService {
     private final MemberRepository memberRepository;
     private final RevenueRepository revenueRepository;
 
-    public UserAssetResponseDto getUserAssets(Long memberId) {
+    public UserAssetResponseDto getUserAssets() {
         List<RevenueHistoryResponseDto> assets = new ArrayList<>();
 
-        // 현재 사용자 데이터 추가 (isCurrentUser = true, 리스트 첫 번째로 위치)
-        assets.addAll(getMemberAssetData(memberId, true));
-
-        // 데이터베이스에 있는 모든 유저 데이터 추가 (현재 사용자 제외, isCurrentUser = false)
         List<Member> allMembers = memberRepository.findAll();
         for (Member member : allMembers) {
             Long otherMemberId = member.getId();
             log.info(String.valueOf(otherMemberId));
-            if (!otherMemberId.equals(memberId)) { // 현재 사용자는 중복 제외
-                assets.addAll(getMemberAssetData(otherMemberId, false));
-            }
+            assets.addAll(getMemberAssetData(otherMemberId));
         }
 
-        log.info("모든 유저 자산 데이터 조회 완료: 현재 사용자 ID = {}", memberId);
+
         return new UserAssetResponseDto(assets);
     }
 
-    private List<RevenueHistoryResponseDto> getMemberAssetData(Long memberId, boolean isCurrentUser) {
+    private List<RevenueHistoryResponseDto> getMemberAssetData(Long memberId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
@@ -82,8 +76,8 @@ public class AssetService {
                 .map(date -> new RevenueHistoryResponseDto(
                         date,
                         historyMap.getOrDefault(date, 0.0), // 데이터 없으면 0.0으로 기본값
-                        member.getName(),
-                        isCurrentUser))
+                        member.getName()
+                        ))
                 .collect(Collectors.toList());
     }
 }

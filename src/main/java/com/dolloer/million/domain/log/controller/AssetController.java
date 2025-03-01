@@ -22,9 +22,9 @@ public class AssetController {
     private final AssetService assetService;
 
     @GetMapping
-    public ResponseEntity<ApiResponse<UserAssetResponseDto>> getUserAssets(@AuthenticationPrincipal AuthUser authUser) {
+    public ResponseEntity<ApiResponse<UserAssetResponseDto>> getUserAssets() {
         log.info("수익 그래프용 호출");
-        UserAssetResponseDto result = assetService.getUserAssets( authUser.getUserId());
+        UserAssetResponseDto result = assetService.getUserAssets();
         log.info("수익 그래프용 응답");
         return ResponseEntity.ok(ApiResponse.success(result, ApiResponseAssetEnum.Asset_GET_SUCCESS.getMessage()));
     }
