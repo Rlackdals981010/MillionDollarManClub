@@ -95,18 +95,19 @@ public class LogService {
             } else {
                 SeedHistory latestSeed = seedRepository.findTopByMemberIdAndDateBeforeOrderByDateDesc(memberId, targetDate)
                         .orElse(null);
-                baseTotal = (latestSeed != null) ? latestSeed.getTotalSeedMoney() :member.getSeedMoney(); // SeedHistory도 없으면 그냥 최신 기준 시드 머니
+                baseTotal = (latestSeed != null) ? latestSeed.getTotalSeedMoney() : member.getSeedMoney(); // SeedHistory도 없으면 그냥 최신 기준 시드 머니
             }
 
             // targetDate의 데이터 처리
             RevenueHistory existingHistory = revenueRepository.findByMemberIdAndDate(memberId, targetDate)
                     .orElse(null);
 
+            double newTotal; // newTotal 변수를 여기서 선언
             if (existingHistory != null) {
                 // 기존 데이터 업데이트
                 double newRevenue = existingHistory.getAddedRevenueMoney() + dailyRevenue;
                 double newSaveMoney = existingHistory.getAddedSaveMoney();
-                double newTotal = baseTotal + newRevenue + newSaveMoney;
+                newTotal = baseTotal + newRevenue + newSaveMoney;
                 double newPercent = newTotal > 0 ? (double) Math.round((newRevenue / newTotal) * 100 * 100) / 100 : 0.0;
                 boolean quest = newPercent >= dailyGoal;
 
@@ -116,7 +117,7 @@ public class LogService {
                 // 새 데이터 생성
                 double newRevenue = dailyRevenue;
                 double newSaveMoney = 0.0;
-                double newTotal = baseTotal + dailyRevenue;
+                newTotal = baseTotal + dailyRevenue;
                 double newPercent = newTotal > 0 ? (double) Math.round((dailyRevenue / newTotal) * 100 * 100) / 100 : 0.0;
                 boolean quest = newPercent >= dailyGoal;
 
@@ -127,6 +128,11 @@ public class LogService {
                 RevenueHistory revenueHistory = new RevenueHistory(
                         member, targetDate, newRevenue, newSaveMoney, newPercent, newTotal, quest);
                 revenueRepository.save(revenueHistory);
+            }
+
+            // targetDate가 오늘 날짜와 같으면 Member의 total 업데이트
+            if (targetDate.equals(LocalDate.now())) {
+                member.updateTotal(newTotal);
             }
 
             // targetDate 이후의 모든 데이터 업데이트
