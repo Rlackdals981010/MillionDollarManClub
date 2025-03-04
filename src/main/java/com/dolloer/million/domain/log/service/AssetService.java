@@ -34,7 +34,6 @@ public class AssetService {
         List<Member> allMembers = memberRepository.findAll();
         for (Member member : allMembers) {
             Long otherMemberId = member.getId();
-            log.info(String.valueOf(otherMemberId));
             assets.addAll(getMemberAssetData(otherMemberId));
         }
 
