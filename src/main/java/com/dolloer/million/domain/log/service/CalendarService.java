@@ -29,14 +29,12 @@ public class CalendarService {
         LocalDate startDate;
         try {
             startDate = LocalDate.parse(date + "-01");
-            log.info("Parsed Start Date: {}", startDate);
         } catch (DateTimeParseException e) {
             log.error("Failed to parse date {}: {}", date, e.getMessage());
             throw new IllegalArgumentException("날짜 형식이 올바르지 않습니다. YYYY-MM 형식을 사용하세요.", e);
         }
 
         LocalDate endDate = startDate.plusMonths(1).minusDays(1);
-        log.info("Calculated End Date: {}", endDate);
 
         // 해당 월의 모든 날짜에 대해 quest 상태 조회
         List<RevenueHistory> histories = revenueRepository.findByMemberIdAndDateBetween(memberId, startDate, endDate);
@@ -71,7 +69,6 @@ public class CalendarService {
         }
 
         LocalDate endDate = startDate.plusMonths(1).minusDays(1);
-        log.info("2");
         // 해당 월의 모든 날짜에 대해 RevenueHistory 리스트 생성
         List<RevenueHistory> histories = revenueRepository.findByMemberIdAndDateBetween(memberId, startDate, endDate);
 
