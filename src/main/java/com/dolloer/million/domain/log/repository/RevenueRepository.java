@@ -13,7 +13,6 @@ public interface RevenueRepository extends JpaRepository<RevenueHistory, Long> {
 
     Page<RevenueHistory> findByMemberId(Long memberId, Pageable pageable);
 
-    Page<RevenueHistory> findByMemberIdAndDateBetween(Long memberId, LocalDate startDate, LocalDate endDate, Pageable pageable);
     List<RevenueHistory> findByMemberIdAndDateBetween(Long memberId, LocalDate startDate, LocalDate endDate);
 
     Optional<RevenueHistory> findByMemberIdAndDate(Long memberId, LocalDate date);
@@ -22,4 +21,6 @@ public interface RevenueRepository extends JpaRepository<RevenueHistory, Long> {
     Optional<RevenueHistory> findTopByMemberIdAndDateBeforeOrderByDateDesc(Long memberId, LocalDate date);
 
     List<RevenueHistory> findByMemberIdAndDateAfterOrderByDateAsc(Long memberId, LocalDate date);
+
+    List<RevenueHistory> findByDateBetween(LocalDate startDate, LocalDate endDate);
 }
