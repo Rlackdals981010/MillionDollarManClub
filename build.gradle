@@ -47,14 +47,10 @@ dependencies {
     // JPA (DB 저장 필요하면 사용)
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
-    // H2 Database (임시 저장용)
-    runtimeOnly("com.h2database:h2")
 
     // Jackson (JSON 파싱)
     implementation("com.fasterxml.jackson.core:jackson-databind")
 
-    // 그래프 데이터 저장용 (차트 그릴 때 활용 가능)
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 
     // Spring Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -66,6 +62,8 @@ dependencies {
 
     implementation 'io.projectreactor.netty:reactor-netty:1.0.24'
     implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
+
+
 
 }
 

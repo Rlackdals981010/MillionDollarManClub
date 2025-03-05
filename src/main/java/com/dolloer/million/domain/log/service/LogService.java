@@ -108,7 +108,7 @@ public class LogService {
                 double newRevenue = existingHistory.getAddedRevenueMoney() + dailyRevenue;
                 double newSaveMoney = existingHistory.getAddedSaveMoney();
                 newTotal = baseTotal + newRevenue + newSaveMoney;
-                double newPercent = newTotal > 0 ? (double) Math.round((newRevenue / newTotal) * 100 * 100) / 100 : 0.0;
+                double newPercent = baseTotal > 0 ? (double) Math.round((newRevenue / newTotal) * 100 * 100) / 100 : 0.0;
                 boolean quest = newPercent >= dailyGoal;
 
                 existingHistory.update(newRevenue, newSaveMoney, newPercent, newTotal, quest);
@@ -118,7 +118,7 @@ public class LogService {
                 double newRevenue = dailyRevenue;
                 double newSaveMoney = 0.0;
                 newTotal = baseTotal + dailyRevenue;
-                double newPercent = newTotal > 0 ? (double) Math.round((dailyRevenue / newTotal) * 100 * 100) / 100 : 0.0;
+                double newPercent = baseTotal > 0 ? (double) Math.round((dailyRevenue / newTotal) * 100 * 100) / 100 : 0.0;
                 boolean quest = newPercent >= dailyGoal;
 
                 if (quest) {
