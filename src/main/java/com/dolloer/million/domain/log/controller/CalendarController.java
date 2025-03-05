@@ -46,6 +46,4 @@ public class CalendarController {
         return ResponseEntity.ok(ret);
     }
 
-
-
 }

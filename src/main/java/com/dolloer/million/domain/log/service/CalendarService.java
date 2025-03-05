@@ -62,7 +62,6 @@ public class CalendarService {
         LocalDate startDate;
         try {
             startDate = LocalDate.parse(date + "-01");
-            log.info("Parsed Start Date for memberId: {}, year: {}, month: {}", memberId, year, month);
         } catch (DateTimeParseException e) {
             log.error("Failed to parse date {}: {}", date, e.getMessage());
             throw new IllegalArgumentException("날짜 형식이 올바르지 않습니다. YYYY-MM 형식을 사용하세요.", e);

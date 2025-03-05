@@ -23,8 +23,9 @@ public class MoneyController {
     // 처리할 일퀘
     @PostMapping("/upcoming")
     public ResponseEntity<ApiResponse<UpcomingQuestResponseDto>> upcomingQuest(@AuthenticationPrincipal AuthUser authUser, @RequestBody QuestRequestDto questRequestDto){
-        log.info("호출됨");
+        log.info("처리할 일퀘 호출");
         UpcomingQuestResponseDto ret = moneyService.upcomingQuest(authUser.getUserId(),questRequestDto.getPer());
+        log.info("처리할 일퀘 응답");
         return ResponseEntity.ok(ApiResponse.success(ret, ApiResponseMoneyEnum.QUEST_UP_SUCCESS.getMessage()));
     }
 

@@ -54,7 +54,7 @@ public class Member {
 
     // 저축액 업데이트
     public void updateSaveMoney(Double saveMoney){
-        this.saveMoney+=saveMoney;
+        this.saveMoney=saveMoney;
     }
 
     // 자산 업데이트
