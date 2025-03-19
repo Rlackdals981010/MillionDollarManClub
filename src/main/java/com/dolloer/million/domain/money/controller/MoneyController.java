@@ -1,5 +1,6 @@
 package com.dolloer.million.domain.money.controller;
 
+import com.dolloer.million.annotation.LogExecution;
 import com.dolloer.million.domain.money.dto.request.QuestRequestDto;
 import com.dolloer.million.domain.money.dto.response.UpcomingQuestResponseDto;
 import com.dolloer.million.domain.money.service.MoneyService;
@@ -21,11 +22,11 @@ public class MoneyController {
     private final MoneyService moneyService;
 
     // 처리할 일퀘
+    @LogExecution
     @PostMapping("/upcoming")
     public ResponseEntity<ApiResponse<UpcomingQuestResponseDto>> upcomingQuest(@AuthenticationPrincipal AuthUser authUser, @RequestBody QuestRequestDto questRequestDto){
-        log.info("처리할 일퀘 호출");
+
         UpcomingQuestResponseDto ret = moneyService.upcomingQuest(authUser.getUserId(),questRequestDto.getPer());
-        log.info("처리할 일퀘 응답");
         return ResponseEntity.ok(ApiResponse.success(ret, ApiResponseMoneyEnum.QUEST_UP_SUCCESS.getMessage()));
     }
 

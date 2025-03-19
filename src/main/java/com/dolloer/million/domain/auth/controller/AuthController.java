@@ -1,5 +1,6 @@
 package com.dolloer.million.domain.auth.controller;
 
+import com.dolloer.million.annotation.LogExecution;
 import com.dolloer.million.domain.auth.dto.request.AuthRequestDto;
 import com.dolloer.million.domain.auth.dto.response.SignInResponseDto;
 import com.dolloer.million.domain.auth.dto.response.SignUpResponseDto;
@@ -20,15 +21,15 @@ public class AuthController {
 
     private final AuthService authService;
 
+    @LogExecution
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<SignUpResponseDto>> signUp(@RequestBody AuthRequestDto authRequestDto){
         return ResponseEntity.ok(ApiResponse.success(authService.signUp(authRequestDto.getName()), ApiResponseAuthEnum.MEMBER_CREATE_SUCCESS.getMessage()));
     }
 
+    @LogExecution
     @PostMapping("/signin")
     public ResponseEntity<ApiResponse<SignInResponseDto>> signIn(@RequestBody AuthRequestDto authRequestDto){
-        log.info("로그인 호출");
         return ResponseEntity.ok(ApiResponse.success(authService.signIn(authRequestDto.getName()), ApiResponseAuthEnum.MEMBER_LOGIN_SUCCESS.getMessage()));
-
     }
 }

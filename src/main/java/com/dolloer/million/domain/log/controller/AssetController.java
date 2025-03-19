@@ -1,5 +1,6 @@
 package com.dolloer.million.domain.log.controller;
 
+import com.dolloer.million.annotation.LogExecution;
 import com.dolloer.million.domain.log.dto.response.UserAssetResponseDto;
 import com.dolloer.million.domain.log.service.AssetService;
 import com.dolloer.million.response.response.ApiResponse;
@@ -21,11 +22,10 @@ public class AssetController {
 
     private final AssetService assetService;
 
+    @LogExecution
     @GetMapping
     public ResponseEntity<ApiResponse<UserAssetResponseDto>> getUserAssets() {
-        log.info("수익 그래프용 호출");
         UserAssetResponseDto result = assetService.getUserAssets();
-        log.info("수익 그래프용 응답");
         return ResponseEntity.ok(ApiResponse.success(result, ApiResponseAssetEnum.Asset_GET_SUCCESS.getMessage()));
     }
 
