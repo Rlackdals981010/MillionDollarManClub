@@ -29,7 +29,6 @@ public class MoneyService {
         if (per != null) {
             member.updateSaveMoney(per);
         }
-        log.info(String.valueOf(member.getSaveMoney()));
 
         // 3% 성장 후 per% 만큼 저축
         double growthRate = 1 + ((dailyGoal - 1) * (1 - usePer / 100));
